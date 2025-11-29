@@ -1,12 +1,3 @@
-import { env, pipeline, Pipeline } from '@xenova/transformers';
-
-// Configure to use local models if possible, or download from CDN
-// Only initialize in browser environment
-if (typeof window !== 'undefined') {
-    env.allowLocalModels = false;
-    env.useBrowserCache = true;
-}
-
 // Singleton to hold the pipeline
 let classifier: any = null;
 
@@ -19,7 +10,19 @@ export interface AIAnalysisResult {
 export const initAI = async (progressCallback?: (progress: number) => void) => {
     if (classifier) return classifier;
 
+    // Only run in browser environment
+    if (typeof window === 'undefined') {
+        throw new Error('AI service can only be initialized in the browser');
+    }
+
     try {
+        // Dynamic import to prevent SSR issues
+        const { env, pipeline } = await import('@xenova/transformers');
+
+        // Configure to use local models if possible, or download from CDN
+        env.allowLocalModels = false;
+        env.useBrowserCache = true;
+
         // Using a general purpose image classification model for demo purposes
         // Ideally we would use a fine-tuned model for coins
         classifier = await pipeline('image-classification', 'Xenova/vit-base-patch16-224', {
