@@ -61,7 +61,7 @@ export function AnalysisResult({
                             <h3 className="font-semibold text-slate-200 mb-2">Dettagli Oggetto</h3>
                             <dl className="space-y-2 text-sm">
                                 <div className="flex justify-between"><dt className="text-slate-400">Descrizione:</dt> <dd className="text-slate-100 font-medium text-right">{matchedItem.description}</dd></div>
-                                <div className="flex justify-between"><dt className="text-slate-400">Paese:</dt> <dd className="text-slate-100">{matchedItem.country} {matchedItem.flag}</dd></div>
+                                <div className="flex justify-between"><dt className="text-slate-400">Paese:</dt> <dd className="text-slate-100">{matchedItem.country}</dd></div>
                                 <div className="flex justify-between"><dt className="text-slate-400">Anno:</dt> <dd className="text-slate-100">{matchedItem.year}</dd></div>
                                 <div className="flex justify-between"><dt className="text-slate-400">Valore Nominale:</dt> <dd className="text-slate-100">{matchedItem.denomination}</dd></div>
                                 {matchedItem.material && <div className="flex justify-between"><dt className="text-slate-400">Materiale:</dt> <dd className="text-slate-100">{matchedItem.material}</dd></div>}
