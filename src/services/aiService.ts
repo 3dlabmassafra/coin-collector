@@ -16,15 +16,19 @@ export const initAI = async (progressCallback?: (progress: number) => void) => {
     }
 
     try {
+        console.log("Starting AI initialization...");
         // Dynamic import to prevent SSR issues
         const { env, pipeline } = await import('@xenova/transformers');
+        console.log("Transformers library imported successfully");
 
         // Configure to use local models if possible, or download from CDN
         env.allowLocalModels = false;
         env.useBrowserCache = true;
+        console.log("Environment configured");
 
         // Using a general purpose image classification model for demo purposes
         // Ideally we would use a fine-tuned model for coins
+        console.log("Creating pipeline...");
         classifier = await pipeline('image-classification', 'Xenova/vit-base-patch16-224', {
             progress_callback: (data: any) => {
                 if (data.status === 'progress' && progressCallback) {
@@ -32,12 +36,14 @@ export const initAI = async (progressCallback?: (progress: number) => void) => {
                 }
             }
         });
+        console.log("Pipeline created successfully");
         return classifier;
     } catch (error) {
         console.error("Failed to load AI model:", error);
         throw error;
     }
 };
+
 
 export const analyzeImage = async (imageUrl: string): Promise<AIAnalysisResult[]> => {
     const model = await initAI();
