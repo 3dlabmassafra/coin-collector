@@ -1,8 +1,11 @@
 import { env, pipeline, Pipeline } from '@xenova/transformers';
 
 // Configure to use local models if possible, or download from CDN
-env.allowLocalModels = false;
-env.useBrowserCache = true;
+// Only initialize in browser environment
+if (typeof window !== 'undefined') {
+    env.allowLocalModels = false;
+    env.useBrowserCache = true;
+}
 
 // Singleton to hold the pipeline
 let classifier: any = null;
